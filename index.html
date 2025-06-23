@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Movie Browser</title>
+</head>
+<body>
+    <header>
+    <h1>Movie Browser</h1>
+    <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search movies..." />
+    <select id="genreFilter">
+        <option value="">All Genres</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Drama">Drama</option>
+        <option value="Action">Action</option>
+        <option value="Documentary">Documentary</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+        <option value="Animation">Animation</option>
+    </select>
+    <button id="toggleDarkMode">🌙</button>
+    </div>
+    </header>
+
+    <main>
+        <!-- Movie cards will be rendered here -->
+         <div id="movieList" class="movie-list"></div>
+    </main>
+
+  <script src="src/script.js"></script>
+</body>
+</html>

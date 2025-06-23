@@ -1,0 +1,11 @@
+{
+  "movies": [
+    { "title": "Inception", "genre": "Sci-Fi", "year": 2010, "image" :"https://f.woowoowoowoo.net/resize/180x270/2d/03/2d0304dfe44b3e7e2cccc313b7ec6104/2d0304dfe44b3e7e2cccc313b7ec6104.jpg" },
+    { "title": "The Godfather", "genre": "Drama", "year": 1972, "image" :"https://f.woowoowoowoo.net/resize/180x270/1e/fe/1efe7a04df2a551d7a218247f0e4da89/1efe7a04df2a551d7a218247f0e4da89.jpg"},
+    { "title": "Toy Story", "genre": "Animation", "year": 1995, "image" :"https://f.woowoowoowoo.net/resize/180x270/a8/c9/a8c9e8dccf6cd094e4bfbdd9212b4930/a8c9e8dccf6cd094e4bfbdd9212b4930.jpg" },
+    { "title": "Parasite", "genre": "Thriller", "year": 2019, "image" :"https://f.woowoowoowoo.net/resize/180x270/46/7d/467dcdb02f64901ea63dd3f549959f5f/467dcdb02f64901ea63dd3f549959f5f.jpg" },
+    { "title": "Titanic", "genre": "Romance", "year": 1997, "image" :"https://f.woowoowoowoo.net/resize/180x270/e1/8b/e18b9813113e8f26bc655864702a9085/e18b9813113e8f26bc655864702a9085.jpg" },
+    { "title": "Black Panther", "genre": "Action", "year": 2018, "image" :"https://f.woowoowoowoo.net/resize/180x270/f7/4a/f74a66220e010c08e72018fba6b7976d/f74a66220e010c08e72018fba6b7976d.jpg" }
+  ]
+}
+

@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #000;
+  transition: background 0.3s, color 0.3s;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+.controls {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+input, select, button {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.movie-card {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background: #1f1f1f;
+}
+
+body.dark-mode .movie-card {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode button {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+h1 {
+  color: gold;
+}
