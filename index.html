@@ -8,27 +8,57 @@
 </head>
 <body>
     <header>
-    <h1>Movie Browser</h1>
-    <div class="controls">
+    <h1>🎬 Movie Browser</h1>
+    <p>Discover amaizing movies</p>
+    <div class="controls"> 
+        <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search movies..." />
+    <button id="searchButton">
+    <img src="https://cdn-icons-png.flaticon.com/128/4250/4250968.png" alt="Search" />
+
+  </button>
+        </div>
     <select id="genreFilter">
         <option value="">All Genres</option>
-        <option value="Sci-Fi">Sci-Fi</option>
+        <!--<option value="Sci-Fi">Sci-Fi</option>
         <option value="Drama">Drama</option>
         <option value="Action">Action</option>
         <option value="Documentary">Documentary</option>
         <option value="Horror">Horror</option>
         <option value="Romance">Romance</option>
-        <option value="Animation">Animation</option>
+        <option value="Animation">Animation</option> -->
     </select>
+    <select id="sortBy">
+     <option value="">Sort by Year</option>
+     <option value="asc">Oldest → Newest</option>
+     <option value="desc">Newest → Oldest</option>
+   </select>
+
     <button id="toggleDarkMode">🌙</button>
     </div>
+
     </header>
 
     <main>
         <!-- Movie cards will be rendered here -->
          <div id="movieList" class="movie-list"></div>
     </main>
+    <section id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Your Message" required></textarea>
+           <button type="submit">Submit</button>
+  </form>
+</section>
+
+<div id="trailerModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">❌</span>
+    <iframe id="trailerFrame" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
 
   <script src="src/script.js"></script>
 </body>

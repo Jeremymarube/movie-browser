@@ -1,11 +1,86 @@
+
+
 {
   "movies": [
-    { "title": "Inception", "genre": "Sci-Fi", "year": 2010, "image" :"https://f.woowoowoowoo.net/resize/180x270/2d/03/2d0304dfe44b3e7e2cccc313b7ec6104/2d0304dfe44b3e7e2cccc313b7ec6104.jpg" },
-    { "title": "The Godfather", "genre": "Drama", "year": 1972, "image" :"https://f.woowoowoowoo.net/resize/180x270/1e/fe/1efe7a04df2a551d7a218247f0e4da89/1efe7a04df2a551d7a218247f0e4da89.jpg"},
-    { "title": "Toy Story", "genre": "Animation", "year": 1995, "image" :"https://f.woowoowoowoo.net/resize/180x270/a8/c9/a8c9e8dccf6cd094e4bfbdd9212b4930/a8c9e8dccf6cd094e4bfbdd9212b4930.jpg" },
-    { "title": "Parasite", "genre": "Thriller", "year": 2019, "image" :"https://f.woowoowoowoo.net/resize/180x270/46/7d/467dcdb02f64901ea63dd3f549959f5f/467dcdb02f64901ea63dd3f549959f5f.jpg" },
-    { "title": "Titanic", "genre": "Romance", "year": 1997, "image" :"https://f.woowoowoowoo.net/resize/180x270/e1/8b/e18b9813113e8f26bc655864702a9085/e18b9813113e8f26bc655864702a9085.jpg" },
-    { "title": "Black Panther", "genre": "Action", "year": 2018, "image" :"https://f.woowoowoowoo.net/resize/180x270/f7/4a/f74a66220e010c08e72018fba6b7976d/f74a66220e010c08e72018fba6b7976d.jpg" }
-  ]
-}
+    {
+      "id": 1,
+      "title": "The Matrix",
+      "genre": "Sci-Fi",
+      "year": 1999,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/e5/10/e510db60b0ea7b6584ee972b466cc212/e510db60b0ea7b6584ee972b466cc212.jpg",
+      "trailer": "https://www.youtube.com/watch?v=vKQi3bBA1y8"
+    },
+    {
+      "id": 2,
+      "title": "Inception",
+      "genre": "Sci-Fi",
+      "year": 2010,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/2d/03/2d0304dfe44b3e7e2cccc313b7ec6104/2d0304dfe44b3e7e2cccc313b7ec6104.jpg",
+      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+    },
+    {
+      "id": 3,
+      "title": "Titanic",
+      "genre": "Romance",
+      "year": 1997,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/e1/8b/e18b9813113e8f26bc655864702a9085/e18b9813113e8f26bc655864702a9085.jpg",
+      "trailer": "https://www.youtube.com/watch?v=kVrqfYjkTdQ"
+    },
+    {
+      "id": 4,
+      "title": "The Godfather",
+      "genre": "Drama",
+      "year": 1972,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/1e/fe/1efe7a04df2a551d7a218247f0e4da89/1efe7a04df2a551d7a218247f0e4da89.jpg",
+      "trailer": "https://www.youtube.com/watch?v=sY1S34973zA"
+    },
+    {
+      "id": 5,
+      "title": "Toy Story",
+      "genre": "Animation",
+      "year": 1995,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/a8/c9/a8c9e8dccf6cd094e4bfbdd9212b4930/a8c9e8dccf6cd094e4bfbdd9212b4930.jpg",
+      "trailer": "https://www.youtube.com/watch?v=KYz2wyBy3kc"
+    },
+    {
+      "id": 6,
+      "title": "Get Out",
+      "genre": "Horror",
+      "year": 2017,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/86/a3/86a3236485586c59e0a7031238f59737/86a3236485586c59e0a7031238f59737.jpg",
+      "trailer": "https://www.youtube.com/watch?v=DzfpyUB60YY"
+    },
+    {
+      "id": 7,
+      "title": "The Social Dilemma",
+      "genre": "Documentary",
+      "year": 2020,
+      "image": "https://img.cdno.my.id/thumb/w_200/h_300/the-social-dilemma-101409.jpg",
+      "trailer": "https://www.youtube.com/watch?v=uaaC57tcci0"
+    },
+    {
+      "id": 8,
+      "title": "Avengers: Endgame",
+      "genre": "Action",
+      "year": 2019,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/d5/c9/d5c931df6080a426ed559d24896d5349/d5c931df6080a426ed559d24896d5349.jpg",
+      "trailer": "https://www.youtube.com/watch?v=CHekzSiZjrY"
+    },
+    {
+      "id": 9,
+      "title": "Coco",
+      "genre": "Animation",
+      "year": 2017,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/7e/44/7e44813c54cbf14c7c7e232494d117fd/7e44813c54cbf14c7c7e232494d117fd.jpg",
+      "trailer": "https://www.youtube.com/watch?v=Rvr68u6k5s0"
+    },
+    {
+      "id": 10,
+      "title": "Joker",
+      "genre": "Drama",
+      "year": 2019,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/c4/73/c473cd6b420e855a1f00fe304f57d886/c473cd6b420e855a1f00fe304f57d886.jpg",
+      "trailer": "https://www.youtube.com/watch?v=zAGVQLHvwOY"
+    }
+  ]}
 
