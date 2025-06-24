@@ -8,8 +8,8 @@
 </head>
 <body>
     <header>
-    <h1>🎬 Movie Browser</h1>
-    <p>Discover amaizing movies</p>
+    <h1>🎬 M.J Movies</h1>
+    <p>Discover amazing movies</p>
     <div class="controls"> 
         <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search movies..." />
@@ -44,13 +44,23 @@
          <div id="movieList" class="movie-list"></div>
     </main>
     <section id="contact" class="contact-section">
-        <h2>Contact Us</h2>
-        <form id="contactForm">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea placeholder="Your Message" required></textarea>
-           <button type="submit">Submit</button>
-  </form>
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+        <div class="form-group">
+            <label for="userName">Name:</label>
+            <input type="text" id="userName" name="name" placeholder="Your Name" required />
+        </div>
+        <div class="form-group">
+            <label for="userEmail">Email:</label>
+            <input type="email" id="userEmail" name="email" placeholder="Your Email" required />
+        </div>
+        <div class="form-group">
+            <label for="userMessage">Message:</label>
+            <textarea id="userMessage" name="message" placeholder="Your Message" rows="4" required></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="formMessage" class="form-message"></div>
 </section>
 
 <div id="trailerModal" class="modal">

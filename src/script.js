@@ -212,5 +212,24 @@ function closeModal() {
 }
 
 closeBtn.addEventListener('click', closeModal);
+// Add this to your script.js
+document.getElementById('contactForm').addEventListener('submit', handleContactForm);
 
+function handleContactForm(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const formMessage = document.getElementById('formMessage');
+    
+    // Simulate form submission (replace with actual API call)
+    setTimeout(() => {
+        formMessage.innerHTML = 'Thank you for your message! We\'ll get back to you soon.';
+        formMessage.className = 'form-message success';
+        e.target.reset(); // Clear form
+    }, 1000);
+    
+    // Show loading state
+    formMessage.innerHTML = 'Sending message...';
+    formMessage.className = 'form-message';
+}
 
