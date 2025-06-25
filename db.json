@@ -1,5 +1,3 @@
-
-
 {
   "movies": [
     {
@@ -8,7 +6,12 @@
       "genre": "Sci-Fi",
       "year": 1999,
       "image": "https://f.woowoowoowoo.net/resize/180x270/e5/10/e510db60b0ea7b6584ee972b466cc212/e510db60b0ea7b6584ee972b466cc212.jpg",
-      "trailer": "https://www.youtube.com/watch?v=vKQi3bBA1y8"
+      "trailer": "https://www.youtube.com/watch?v=vKQi3bBA1y8",
+      "description": "Set in the 22nd century, The Matrix tells the story of a personal computer programmer that joins a group of underground insurgents fighting the vast and powerful computers who now rule the globe.",
+      "director": "Lana Wachowski, Andy Wachowski",
+      "cast": [
+        "Marcus Chong, Rowan Witt, Robert Taylor, Paul Goddard, Janaya Pender"
+      ]
     },
     {
       "id": 2,
@@ -16,7 +19,12 @@
       "genre": "Sci-Fi",
       "year": 2010,
       "image": "https://f.woowoowoowoo.net/resize/180x270/2d/03/2d0304dfe44b3e7e2cccc313b7ec6104/2d0304dfe44b3e7e2cccc313b7ec6104.jpg",
-      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0",
+      "description": "obb, a skilled burglar who commits corporate espionage by infiltrating the subconscious of his targets, is given an opportunity to regain his old life as payment for a task considered impossible: 'inception' — the implantation of another person's idea into a target's subconscious",
+      "director": "Christopher Nolan",
+      "cast": [
+        "Joseph Gordon-Levitt, Marc Raducci, Miranda Nolan, Marion Cotillard, Cillian Murphy"
+      ]
     },
     {
       "id": 3,
@@ -24,7 +32,12 @@
       "genre": "Romance",
       "year": 1997,
       "image": "https://f.woowoowoowoo.net/resize/180x270/e1/8b/e18b9813113e8f26bc655864702a9085/e18b9813113e8f26bc655864702a9085.jpg",
-      "trailer": "https://www.youtube.com/watch?v=kVrqfYjkTdQ"
+      "trailer": "https://www.youtube.com/watch?v=kVrqfYjkTdQ",
+      "description": "Rose DeWitt Bukater informs the narrative of her own life aboard the Titanic, 84 decades after. A Rose boards the boat with her mother and fiancé. Meanwhile, Fabrizio De Rossi and Jack Dawson win Third Class tickets aboard the boat. Rose informs the story from the departure of Titanic to its death--on its first and last voyage--about April 15, 1912.",
+      "director": "James Cameron",
+      "cast": [
+        "Bill Paxton, Billy Zane, David Warner, Ewan Stewart, Amy Gaipa"
+      ]
     },
     {
       "id": 4,
@@ -32,15 +45,25 @@
       "genre": "Drama",
       "year": 1972,
       "image": "https://f.woowoowoowoo.net/resize/180x270/1e/fe/1efe7a04df2a551d7a218247f0e4da89/1efe7a04df2a551d7a218247f0e4da89.jpg",
-      "trailer": "https://www.youtube.com/watch?v=sY1S34973zA"
+      "trailer": "https://www.youtube.com/watch?v=sY1S34973zA",
+      "description": "Crossing the years 1945 to 1955, a chronicle of this literary Corleone crime family that is ItalianAmerican. Vito Corleone survives an attempt on his own life, his son when crime family patriarch, Michael steps in to look after the prospective killers.",
+      "director": "Francis Ford Coppola",
+      "cast": [
+        "Richard Bright, Rudy Bond, John Marley, Robert Duvall, Al Pacino"
+      ]
     },
     {
       "id": 5,
-      "title": "Money Heist(La Casa de Papel",
+      "title": "Money Heist",
       "genre": "Crime drama,Thriller",
       "year": 2017,
       "image": "https://f.woowoowoowoo.net/resize/180x270/00/f3/00f3cff0f4f09b6cffa5c6a59878b027/00f3cff0f4f09b6cffa5c6a59878b027.jpg",
-      "trailer": "https://www.youtube.com/watch?v=TekFtuBBs1k"
+      "trailer": "https://www.youtube.com/watch?v=TekFtuBBs1k",
+      "description": "A person known as the Professor recruits a band of eight robbers who have a single feature to carry out the greatest heist ever : not one of them has anything to lose. Five weeks of seclusion - memorizing every step, every detail, every opportunity - culminate in eleven days locked up from the National Coinage and Stamp Factory of Spain, surrounded by police forces and with heaps of hostages in their capability, to learn whether their suicide bet will result in nothing or everything.",
+      "director": "Álex Pina",
+      "cast": [
+        "Úrsula Corberó, Itziar Ituño, Álvaro Morte, Paco Tous, Pedro Alonso"
+      ]
     },
     {
       "id": 6,
@@ -48,7 +71,12 @@
       "genre": "Horror",
       "year": 2017,
       "image": "https://f.woowoowoowoo.net/resize/180x270/86/a3/86a3236485586c59e0a7031238f59737/86a3236485586c59e0a7031238f59737.jpg",
-      "trailer": "https://www.youtube.com/watch?v=DzfpyUB60YY"
+      "trailer": "https://www.youtube.com/watch?v=DzfpyUB60YY",
+      "description": "Chris along with his girlfriend Rose go up state to go to her parents. Initially, the too adapting behaviour as nervous tries to manage their kid's interracial relationship, but since the weekend progresses of the family is read by Chris, some increasingly disturbing discoveries lead him he never could have imagined.",
+      "director": "Jordan Peele",
+      "cast": [
+        "Bradley Whitford, Ashley LeConte Campbell, Daniel Kaluuya, Julie Ann Doan, Geraldine Singer"
+      ]
     },
     {
       "id": 7,
@@ -56,7 +84,12 @@
       "genre": "Documentary",
       "year": 2020,
       "image": "https://img.cdno.my.id/thumb/w_200/h_300/the-social-dilemma-101409.jpg",
-      "trailer": "https://www.youtube.com/watch?v=uaaC57tcci0"
+      "trailer": "https://www.youtube.com/watch?v=uaaC57tcci0",
+      "description": "Explores the dangerous human impact of social networking, with tech experts sounding the alarm on their own creations.",
+      "director": "Jeff Orlowski",
+      "cast": [
+        "Skyler Gisondo, Kara Hayward, Vincent Kartheiser"
+      ]
     },
     {
       "id": 8,
@@ -64,7 +97,12 @@
       "genre": "Action",
       "year": 2019,
       "image": "https://f.woowoowoowoo.net/resize/180x270/d5/c9/d5c931df6080a426ed559d24896d5349/d5c931df6080a426ed559d24896d5349.jpg",
-      "trailer": "https://www.youtube.com/watch?v=TcMBFSGVi1c"
+      "trailer": "https://www.youtube.com/watch?v=TcMBFSGVi1c",
+      "description": "The universe Remains due to the efforts of This Mad Titan, Thanos. With the aid of remaining allies, the Avengers must gather to reverse Thanos' actions and restore order on the universe and for all.",
+      "director": "Joe Russo, Anthony Russo",
+      "cast": [
+        "Tilda Swinton, Paul Bettany, Josh Brolin, Elizabeth Olsen, Samuel L. Jackson"
+      ]
     },
     {
       "id": 9,
@@ -72,7 +110,12 @@
       "genre": "Animation",
       "year": 2017,
       "image": "https://f.woowoowoowoo.net/resize/180x270/7e/44/7e44813c54cbf14c7c7e232494d117fd/7e44813c54cbf14c7c7e232494d117fd.jpg",
-      "trailer": "https://www.youtube.com/watch?v=Rvr68u6k5s0"
+      "trailer": "https://www.youtube.com/watch?v=Rvr68u6k5s0",
+      "description": "Despite his loved ones baffling prohibit on music, Miguel fantasies to become the accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his ability, Miguel finds himself at the magnificent and colorful Land of the Dead after a mysterious chain of events. On the way, he matches charming trickster Hector, and they set off to uncover the story behind Miguel's family history.",
+      "director": "Lee Unkrich, Adrian Molina",
+      "cast": [
+        "Dyana Ortelli, Alanna Ubach, Jacqueline Pinol, Roberto Donati, Selene Luna"
+      ]
     },
     {
       "id": 10,
@@ -80,7 +123,20 @@
       "genre": "Drama",
       "year": 2019,
       "image": "https://f.woowoowoowoo.net/resize/180x270/c4/73/c473cd6b420e855a1f00fe304f57d886/c473cd6b420e855a1f00fe304f57d886.jpg",
-      "trailer": "https://www.youtube.com/watch?v=zAGVQLHvwOY"
+      "trailer": "https://www.youtube.com/watch?v=zAGVQLHvwOY",
+      "description": "During the 1980s, while becoming an infamous psychopathic crime figure, there is a collapsed stand-up comedian driven mad and ends into a life of chaos and crime in Gotham City.",
+      "director": "Todd Phillips",
+      "cast": [
+        "Joaquin Phoenix, Zazie Beetz, Brett Cullen, Frances Conroy, Robert De Niro"
+      ]
+    },
+    {
+      "title": "The 100",
+      "genre": "Drama,Sci-Fi and Fantasy",
+      "year": 2014,
+      "image": "https://f.woowoowoowoo.net/resize/180x270/17/70/17706b76db65afe64fcfa91aafecd9b5/17706b76db65afe64fcfa91aafecd9b5.jpg",
+      "trailer": "",
+      "id": 11
     }
-  ]}
-
+  ]
+}

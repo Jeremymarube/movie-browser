@@ -2,17 +2,19 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #ffffff;
-  color: #000;
+  background: #fff;
+  color: #222;
   transition: background 0.3s, color 0.3s;
 }
 
 header {
-  background: #333;
+  background: #ffffff;
   color: #fff;
   padding: 1rem;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+
 
 .controls {
   margin-top: 1rem;
@@ -23,8 +25,13 @@ header {
 }
 
 input, select, button {
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  transition: all 0.2s ease;
 }
 
 .movie-list {
@@ -35,15 +42,16 @@ input, select, button {
 }
 
 .movie-card {
-  background: #f5f5f5;
+  background: #ffffff;
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
 }
 .movie-card:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+
 }
 
 
@@ -70,19 +78,23 @@ body.dark-mode button {
   border: 1px solid #555;
 }
 h1 {
-  color: gold;
+  color: #f4b400;
 }
 input:focus,
 select:focus,
 button:focus {
-  outline: 2px solid #007acc;
+  outline: none;
+  border-color: #007acc;
+  box-shadow: 0 0 4px rgba(0, 122, 204, 0.3);
 }
 .upvote-btn {
-  background: green;
+  background-color: #28a745;
+  color: white;
   border: none;
   border-radius: 4px;
   padding: 0.3rem 0.6rem;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -91,25 +103,33 @@ button:focus {
 }
 
 .upvote-btn:hover {
-  background: green;
+  background: #218838;
 }
 
 /* Animation class */
 .upvote-animate {
   animation: popScale 0.3s ease forwards;
 }
+body:not(.dark-mode) .upvote-btn {
+  background-color: #28a745;
+}
+body:not(.dark-mode) .upvote-btn:hover {
+  background-color: #218838;
+}
 
 @keyframes popScale {
   0% { transform: scale(1); color: #000; }
-  50% { transform: scale(1.3); color: #ff4500; }
+  50% { transform: scale(1.2); background-color: #34ce57; }
   100% { transform: scale(1); color: #000; }
 }
 .downvote-btn {
-  background: red;
+  background: #dc3545;
+  color: white;
   border: none;
   border-radius: 4px;
   padding: 0.3rem 0.6rem;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -118,19 +138,25 @@ button:focus {
 }
 
 .downvote-btn:hover {
-  background: red;
+  background: #c82333;
 }
 
 /* Downvote animation */
 .downvote-animate {
   animation: shake 0.3s ease forwards;
 }
+body:not(.dark-mode) .downvote-btn {
+  background-color: #dc3545;
+}
+body:not(.dark-mode) .downvote-btn:hover {
+  background-color: #c82333;
+}
 
 @keyframes shake {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
   100% { transform: translateX(0); }
 }
 
@@ -159,7 +185,6 @@ button:focus {
   font-size: 1rem;
 }
 #searchInput {
-  
   background-size: 24px 24px;
   padding-right: 2.2rem; /* space so text doesn't overlap icon */
   font-size: 1rem;
@@ -201,9 +226,23 @@ button:focus {
 }
 .contact-section {
   padding: 2rem;
-  background-color: black;
+  background-color: #fff;
   text-align: center;
   color: #721c24;
+}
+body.dark-mode .contact-section {
+  background-color: #000;
+  color: gold; /* brighter text for dark mode */
+}
+
+.form-group label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #000; /* readable on white */
+}
+
+body.dark-mode .form-group label {
+  color: gold;
 }
 #contactForm {
     max-width: 600px;
@@ -216,13 +255,29 @@ button:focus {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .form-group label {
     font-weight: bold;
-    color: gold;
-    text-align: left;
+    font-size: 1rem;
+    color: #000;
+    margin-bottom: 0.3rem;
+}
+body.dark-mode .form-group label {
+  color: gold; /* Or another readable color for dark mode */
+}
+#addForm input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+body.dark-mode #addForm input {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
 }
 
 .form-message {
@@ -250,6 +305,8 @@ button:focus {
 
   .movie-card {
     font-size: 0.9rem;
+    background: #f9f9f9;
+  border: 1px solid #ddd;
   }
 
   .contact-form input,
@@ -309,4 +366,446 @@ button:focus {
 .watch-trailer-btn:hover {
   background-color: white;
   color: gold;
+}
+body:not(.dark-mode) .watch-trailer-btn {
+  background-color: #222;
+  color: gold;
+}
+
+body:not(.dark-mode) .watch-trailer-btn:hover {
+  background-color: #444;
+}
+
+.add-btn {
+  margin-left: auto;
+  background-color: #28a745;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #218838;
+}
+#detailsModal .modal-content {
+  background-color: #222;
+  color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+#detailsModal img {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+#detailsCloseBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #000; /* Dark color for light mode */
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+body.dark-mode #detailsCloseBtn {
+  color: #fff; /* White for dark mode */
+}
+.edit-btn {
+ padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.edit-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
+}
+.button-bar {
+  display: flex;
+  justify-content: flex-end;  /* Pushes button to the right */
+  padding: 1rem;              /* Optional spacing */
+}
+
+.add-movie-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-movie-btn:hover {
+  background-color: #218838;
+}
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #a71d2a;
+}
+/* Modal content form styling */
+#addModal form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#addModal label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #000;
+}
+body.dark-mode #addModal label {
+  color: gold; /* Readable in dark background */
+}
+
+#addModal input[type="text"],
+#addModal input[type="number"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 0.3rem;
+  transition: border-color 0.3s;
+}
+
+#addModal input[type="text"]:focus,
+#addModal input[type="number"]:focus {
+  outline: none;
+  border-color: #007bff; /* blue focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#addModal button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+  font-weight: 700;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#addModal button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+/* Optional: Add some spacing inside modal-content */
+#addModal .modal-content {
+  padding: 2rem 2rem 3rem 2rem;
+  position: relative;
+  border-radius: 10px;
+  background-color: #fff; /* Light mode */
+  color: #000;
+}
+body.dark-mode #addModal .modal-content {
+  background-color: #000;
+  color: #fff;
+}
+#addModal label {
+  display: block;           /* Makes label take full width */
+  font-weight: 600;         /* Bold titles */
+  font-size: 1.1rem;        /* Slightly larger font for emphasis */
+  color: var(--text-color, #000);  /* Use theme text color */
+  margin-bottom: 0.3rem;    /* Space below title before input */
+  cursor: pointer;          /* Indicates clickable labels for accessibility */
+}
+.button-row {
+  display: flex;
+  gap: 0.5rem; /* spacing between buttons */
+  margin-top: 0.5rem;
+  justify-content: space-between; /* or center / space-between */
+}
+
+.button-row .edit-btn,
+.button-row .delete-btn {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+button {
+  background-color: #007BFF; /* A strong blue for visibility */
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+/* Labels */
+label {
+  color: #111;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Links or other elements that might be hard to see */
+a {
+  color: #007BFF;
+}
+
+a:hover {
+  color: #0056b3;
+}
+body.dark-mode {
+  background-color: #121212;
+  color: #ddd;
+}
+
+body.dark-mode button {
+  background-color: #444;
+  color: #eee;
+}
+/* Edit Modal Base Styles */
+#editModal .modal-content {
+  background-color: #ffffff;
+  color: #333;
+  padding: 2rem 2rem 3rem 2rem;
+  border-radius: 12px;
+  max-width: 350px;
+  width: 85%;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Edit Modal Form Layout */
+#editModal form,
+#editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+/* Form Groups */
+#editModal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Labels */
+#editModal .form-group label,
+#editForm label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+/* Input Fields */
+#editModal input,
+#editModal textarea,
+#editModal select {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 2px solid #e9ecef;
+  padding: 0.75rem;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* Input Focus States */
+#editModal input:focus,
+#editModal textarea:focus,
+#editModal select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  background-color: #fff;
+}
+
+/* Submit Button */
+#editModal button[type="submit"] {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+#editModal button[type="submit"]:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+#editModal button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Close Button */
+#editModal .close-edit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #f8f9fa;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #6c757d;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+#editModal .close-edit-btn:hover {
+  background: #e9ecef;
+  color: #495057;
+  transform: scale(1.1);
+}
+
+/* DARK MODE STYLES */
+body.dark-mode #editModal .modal-content {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
+}
+
+body.dark-mode #editModal .form-group label,
+body.dark-mode #editForm label {
+  color: #ffd700;
+}
+
+body.dark-mode #editModal input,
+body.dark-mode #editModal textarea,
+body.dark-mode #editModal select {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 2px solid #404040;
+}
+
+body.dark-mode #editModal input:focus,
+body.dark-mode #editModal textarea:focus,
+body.dark-mode #editModal select:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+  background-color: #333;
+}
+
+body.dark-mode #editModal button[type="submit"] {
+  background-color: #ffd700;
+  color: #000;
+}
+
+body.dark-mode #editModal button[type="submit"]:hover {
+  background-color: #e6c200;
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+body.dark-mode #editModal .close-edit-btn {
+  background: #333;
+  color: #ccc;
+}
+
+body.dark-mode #editModal .close-edit-btn:hover {
+  background: #444;
+  color: #fff;
+}
+
+/* Modal Title */
+#editModal h2 {
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+body.dark-mode #editModal h2 {
+  color: #ffd700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #editModal .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  #editModal form,
+  #editForm {
+    gap: 1rem;
+  }
+  
+  #editModal button[type="submit"] {
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+/* Error States */
+#editModal input.error,
+#editModal textarea.error,
+#editModal select.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+body.dark-mode #editModal input.error,
+body.dark-mode #editModal textarea.error,
+body.dark-mode #editModal select.error {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+/* Loading State */
+#editModal button[type="submit"]:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#editModal button[type="submit"]:disabled:hover {
+  background-color: #6c757d;
+  transform: none;
+  box-shadow: none;
 }

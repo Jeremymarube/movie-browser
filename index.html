@@ -36,6 +36,10 @@
 
     <button id="toggleDarkMode">🌙</button>
     </div>
+     <div class="button-bar">
+        <button id="addMovieBtn" class="add-movie-btn">➕ Add Movie</button>
+     </div>
+
 
     </header>
 
@@ -69,6 +73,85 @@
     <iframe id="trailerFrame" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
   </div>
 </div>
+<div id="detailsModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <button class="close-btn" id="detailsCloseBtn" aria-label="Close details modal">&times;</button>
+    <div id="detailsContent"></div>
+  </div>
+</div>
+
+ <div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close-edit-btn">Cancel</span>
+    <h2>Edit Movie</h2>
+    <form id="editForm">
+  <div class="form-group">
+    <label for="editTitle">Title:</label>
+    <input type="text" id="editTitle" required />
+  </div>
+
+  <div class="form-group">
+    <label for="editGenre">Genre:</label>
+    <input type="text" id="editGenre" required />
+  </div>
+
+  <div class="form-group">
+    <label for="editYear">Year:</label>
+    <input type="number" id="editYear" required />
+  </div>
+
+  <div class="form-group">
+    <label for="editImage">Image URL:</label>
+    <input type="text" id="editImage" placeholder="https://..." />
+  </div>
+
+  <div class="form-group">
+    <label for="editTrailer">Trailer URL:</label>
+    <input type="text" id="editTrailer" placeholder="https://youtube.com/watch?v=..." />
+  </div>
+
+  <button type="submit">Save Changes</button>
+</form>
+
+  </div>
+</div>
+<!-- Add Movie Modal -->
+<div id="addModal" class="modal">
+  <div class="modal-content">
+    <span class="close-add-btn">❌</span>
+    <h2>Add New Movie</h2>
+     <form id="addForm">
+  <div class="form-group">
+    <label for="addTitle">Title:</label>
+    <input type="text" id="addTitle" required />
+  </div>
+
+  <div class="form-group">
+    <label for="addGenre">Genre:</label>
+    <input type="text" id="addGenre" required />
+  </div>
+
+  <div class="form-group">
+    <label for="addYear">Year:</label>
+    <input type="number" id="addYear" required />
+  </div>
+
+  <div class="form-group">
+    <label for="addImage">Image URL:</label>
+    <input type="text" id="addImage" placeholder="https://..." />
+  </div>
+
+  <div class="form-group">
+    <label for="addTrailer">Trailer URL:</label>
+    <input type="text" id="addTrailer" placeholder="https://youtube.com/watch?v=..." />
+  </div>
+
+  <button type="submit">Add Movie</button>
+</form>
+
+  </div>
+</div>
+   
 
   <script src="src/script.js"></script>
 </body>

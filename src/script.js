@@ -109,10 +109,19 @@ function renderMovies() {
         <button class="downvote-btn" data-id="${movie.id}">👎 <span>${downvoteCounts[movie.id] || 0}</span></button>
       </div>
       <button class="watch-trailer-btn" data-trailer="${movie.trailer}">🎬 Trailer</button>
+      <div class="button-row">
+      <button class="edit-btn" data-id="${movie.id}">Edit</button>
+      <button class="delete-btn" data-id="${movie.id}">Delete</button>
+      </div>
     </div>
   `).join('');
 
   addVoteListeners();
+
+  attachEditListeners();
+attachDeleteListeners();
+
+   
 
   // Add trailer button event listeners here, after rendering movies
   document.querySelectorAll('.watch-trailer-btn').forEach(button => {
@@ -122,6 +131,18 @@ function renderMovies() {
       openModal(trailerUrl);
     });
   });
+
+  document.querySelectorAll('.movie-card').forEach((card, index) => {
+  card.addEventListener('click', (e) => {
+    // If click originated from a button (or inside one), skip
+    if (e.target.closest('button')) return;
+
+    const movie = filteredMovies[index];
+    openDetailsModal(movie);
+  });
+});
+
+
 }
 
 function addVoteListeners() {
@@ -232,4 +253,142 @@ function handleContactForm(e) {
     formMessage.innerHTML = 'Sending message...';
     formMessage.className = 'form-message';
 }
+function attachEditListeners() {
+  const editButtons = document.querySelectorAll('.edit-btn');
+  editButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const id = e.target.dataset.id;
+      const movie = movies.find(m => m.id == id);
+      if (!movie) return;
+
+      currentEditId = id;
+      editTitle.value = movie.title;
+      editGenre.value = movie.genre;
+      editYear.value = movie.year;
+
+      editModal.style.display = 'flex';
+    });
+  });
+}
+ 
+
+
+function attachDeleteListeners() {
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', async (e) => {
+      const id = e.target.dataset.id;
+      const confirmDelete = confirm("Are you sure you want to delete this movie?");
+      if (confirmDelete) {
+        await fetch(`http://localhost:3000/movies/${id}`, {
+          method: 'DELETE'
+        });
+        fetchMovies(); // re-fetch and re-render
+      }
+    });
+  });
+}
+const editModal = document.getElementById('editModal');
+const closeEditBtn = document.querySelector('.close-edit-btn');
+const editForm = document.getElementById('editForm');
+let currentEditId = null;
+
+const editTitle = document.getElementById('editTitle');
+const editGenre = document.getElementById('editGenre');
+const editYear = document.getElementById('editYear');
+
+closeEditBtn.addEventListener('click', () => {
+  editModal.style.display = 'none';
+  currentEditId = null;
+});
+editForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!currentEditId) return;
+
+  const updatedMovie = {
+    title: editTitle.value.trim(),
+    genre: editGenre.value.trim(),
+    year: parseInt(editYear.value)
+  };
+
+  await fetch(`http://localhost:3000/movies/${currentEditId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedMovie)
+  });
+
+  currentEditId = null;
+  editModal.style.display = 'none';
+  fetchMovies(); // Re-render the list
+});
+const addModal = document.getElementById('addModal');
+const addForm = document.getElementById('addForm');
+const addMovieBtn = document.getElementById('addMovieBtn');
+const closeAddBtn = document.querySelector('.close-add-btn');
+
+const addTitle = document.getElementById('addTitle');
+const addGenre = document.getElementById('addGenre');
+const addYear = document.getElementById('addYear');
+const addImage = document.getElementById('addImage');
+const addTrailer = document.getElementById('addTrailer');
+addMovieBtn.addEventListener('click', () => {
+  addModal.style.display = 'flex';
+});
+
+closeAddBtn.addEventListener('click', () => {
+  addModal.style.display = 'none';
+  addForm.reset();
+});
+addForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const newMovie = {
+    title: addTitle.value.trim(),
+    genre: addGenre.value.trim(),
+    year: parseInt(addYear.value),
+    image: addImage.value.trim() || 'https://via.placeholder.com/200x300',
+    trailer: addTrailer.value.trim()
+  };
+
+  await fetch('http://localhost:3000/movies', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newMovie)
+  });
+
+  addModal.style.display = 'none';
+  addForm.reset();
+  fetchMovies(); // re-render movie list
+});
+const detailsModal = document.getElementById('detailsModal');
+const detailsContent = document.getElementById('detailsContent');
+const detailsCloseBtn = document.getElementById('detailsCloseBtn');
+
+function openDetailsModal(movie) {
+  detailsContent.innerHTML = `
+    <h2>${movie.title} (${movie.year})</h2>
+    <img src="${movie.image}" alt="${movie.title} Poster" style="max-width:200px; float:right; margin-left:1rem; border-radius:8px;" />
+    <p><strong>Genre:</strong> ${movie.genre}</p>
+    <p><strong>Description:</strong> ${movie.description || 'No description available.'}</p>
+    <p><strong>Director:</strong> ${movie.director || 'Unknown'}</p>
+    <p><strong>Cast:</strong> ${movie.cast ? movie.cast.join(', ') : 'Unknown'}</p>
+    <div style="clear:both;"></div>
+  `;
+  detailsModal.style.display = 'flex';
+  detailsCloseBtn.focus();
+}
+
+function closeDetailsModal() {
+  detailsModal.style.display = 'none';
+}
+
+// Close modal on clicking close button or Escape key
+detailsCloseBtn.addEventListener('click', closeDetailsModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === "Escape" && detailsModal.style.display === 'flex') {
+    closeDetailsModal();
+  }
+});
 
