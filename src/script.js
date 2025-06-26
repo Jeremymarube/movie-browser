@@ -1,4 +1,3 @@
-
 const movieList       = document.getElementById('movieList');
 const searchInput     = document.getElementById('searchInput');
 const genreFilter     = document.getElementById('genreFilter');
@@ -7,7 +6,7 @@ const sortBy          = document.getElementById('sortBy');
 const searchButton    = document.getElementById('searchButton');
 
 
-let movies = [];              // All movie objects
+let movies =  [];             // All movie objects
 let lastFocusedElement = null; // Stores the element that had focus before opening a modal
 
 // Debounce helper 
@@ -264,7 +263,7 @@ editForm.addEventListener('submit', async e => {
     year: parseInt(editYear.value, 10)
   };
 
-  await fetch(`http://localhost:3000/movies/${currentEditId}`, {
+  await fetch(`https://my-json-server-api.onrender.com/movies/${currentEditId}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updated)
@@ -282,7 +281,7 @@ function attachDeleteListeners () {
     btn.addEventListener('click', async () => {
       const id = btn.dataset.id;
       if (!confirm('Are you sure you want to delete this movie?')) return;
-      await fetch(`http://localhost:3000/movies/${id}`, { method: 'DELETE' });
+      await fetch(`https://my-json-server-api.onrender.com/movies/${id}`, { method: 'DELETE' });
       fetchMovies();
     });
   });
@@ -316,7 +315,7 @@ addForm.addEventListener('submit', async e => {
     trailer: addTrailer.value.trim()
   };
 
-  await fetch('http://localhost:3000/movies', {
+  await fetch('https://my-json-server-api.onrender.com/movies', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newMovie)
@@ -354,6 +353,25 @@ function closeDetailsModal () {
 
 detailsClose.addEventListener('click', closeDetailsModal);
 
+function loadMoviesFromStorage() {
+    try {
+        const stored = localStorage.getItem('movieBrowserData');
+        if (stored) {
+            return JSON.parse(stored);
+        }
+        return null;
+    } catch (error) {
+        console.error('Error loading movies:', error);
+        return null;
+    }
+}
 
-
+function saveMoviesToStorage(moviesArray) {
+    try {
+        localStorage.setItem('movieBrowserData', JSON.stringify(moviesArray));
+        console.log('Movies saved successfully');
+    } catch (error) {
+        console.error('Error saving movies:', error);
+    }
+}
 
