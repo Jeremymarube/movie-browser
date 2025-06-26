@@ -1,354 +1,318 @@
-const movieList = document.getElementById('movieList');
-const searchInput = document.getElementById('searchInput');
-const genreFilter = document.getElementById('genreFilter');
-const toggleDarkMode = document.getElementById('toggleDarkMode');
-const sortBy = document.getElementById('sortBy');
-const searchButton = document.getElementById('searchButton');
 
-let movies = [];
-let lastFocusedElement = null;
+const movieList       = document.getElementById('movieList');
+const searchInput     = document.getElementById('searchInput');
+const genreFilter     = document.getElementById('genreFilter');
+const toggleDarkMode  = document.getElementById('toggleDarkMode');
+const sortBy          = document.getElementById('sortBy');
+const searchButton    = document.getElementById('searchButton');
 
-// Debounce helper function
-function debounce(func, delay) {
+
+let movies = [];              // All movie objects
+let lastFocusedElement = null; // Stores the element that had focus before opening a modal
+
+// Debounce helper 
+function debounce (fn, delay = 300) {
   let timeout;
-  return function(...args) {
+  return (...args) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), delay);
+    timeout = setTimeout(() => fn.apply(null, args), delay);
   };
 }
 
-// Run when page loads
+// Local‑storage‑backed vote counters 
+let upvoteCounts   = JSON.parse(localStorage.getItem('upvoteCounts'))   || {};
+let downvoteCounts = JSON.parse(localStorage.getItem('downvoteCounts')) || {};
+
+// Startup 
 document.addEventListener('DOMContentLoaded', () => {
-  applySavedTheme();             // Apply dark/light mode from storage
-  fetchMovies();                 // Load movies
+  applySavedTheme();   // 1. Respect saved dark/light choice
+  fetchMovies();       // 2. Retrieve data from db.json / API
 
-  // Event listeners
-  searchInput.addEventListener('input', debounce(renderMovies, 300)); // debounce search input
-  genreFilter.addEventListener('change', renderMovies);
+  // 3. Wire UI controls 
+  searchInput .addEventListener('input', debounce(renderMovies, 300));
+  genreFilter.addEventListener('change',  renderMovies);
   toggleDarkMode.addEventListener('click', toggleTheme);
-  sortBy.addEventListener('change', renderMovies);
-  searchButton.addEventListener('click', renderMovies);
+  sortBy      .addEventListener('change',  renderMovies);
+  searchButton.addEventListener('click',   renderMovies);
 
-  // Modal keyboard accessibility: close on ESC
+  // Close any modal on ESC 
   document.addEventListener('keydown', (e) => {
-    if (e.key === "Escape" && modal.style.display === 'flex') {
-      closeModal();
-    }
+    if (e.key !== 'Escape') return;
+    if (trailerModal.style.display === 'flex') closeTrailerModal();
+    if (detailsModal.style.display === 'flex') closeDetailsModal();
   });
 });
 
-// Fetch movie data from server or API
-function fetchMovies() {
-  fetch('http://localhost:3000/movies')
-    .then(response => response.json())
+// Fetch & transform data ------------------------------------------------------
+function fetchMovies () {
+  fetch('https://my-json-server-api.onrender.com/movies')
+    .then(res => res.json())
     .then(data => {
-      movies = data;
-      populateGenres(data);
+      movies = data.filter(item => !item.type || item.type === 'movie');
+      populateGenres(movies);
       renderMovies();
     })
-    .catch(error => {
-      console.error('Fetch error:', error);
-      movieList.innerHTML = `<p class="no-results">Sorry, we couldn't load movies. Please try again later.</p>`;
+    .catch(err => {
+      console.error('Fetch error:', err);
+      movieList.innerHTML = '<p class="no-results">Sorry, we couldn\'t load movies. Please try again later.</p>';
     });
 }
 
-// Fill dropdown with unique genres
-function populateGenres(data) {
-  // Clear existing options except first "All Genres"
-  genreFilter.innerHTML = '<option value="">All Genres</option>';
-  const genres = [...new Set(data.map(movie => movie.genre))];
-  genres.forEach(genre => {
-    const option = document.createElement('option');
-    option.value = genre;
-    option.textContent = genre;
-    genreFilter.appendChild(option);
+// Populate <select> with unique genres
+function populateGenres (movieArray) {
+  genreFilter.innerHTML = '<option value="">All Genres</option>'; // reset
+  [...new Set(movieArray.map(m => m.genre))].sort().forEach(genre => {
+    const opt = document.createElement('option');
+    opt.value = genre;
+    opt.textContent = genre;
+    genreFilter.appendChild(opt);
   });
 }
 
-// Load saved votes from localStorage or create empty objects
-let upvoteCounts = JSON.parse(localStorage.getItem('upvoteCounts')) || {};
-let downvoteCounts = JSON.parse(localStorage.getItem('downvoteCounts')) || {};
-
-// Render filtered movies
-function renderMovies() {
-  const searchTerm = searchInput.value.toLowerCase();
-  const selectedGenre = genreFilter.value;
-  const sortOrder = sortBy.value;
-
-  if (!Array.isArray(movies)) {
-    movieList.innerHTML = `<p class="no-results">No movie data available.</p>`;
+// Core render function --------------------------------------------------------
+function renderMovies () {
+  if (!Array.isArray(movies) || !movies.length) {
+    movieList.innerHTML = '<p class="no-results">No movie data available.</p>';
     return;
   }
 
-  let filteredMovies = movies.filter(movie => {
-    const matchTitle = movie.title.toLowerCase().includes(searchTerm);
-    const matchGenre = selectedGenre ? movie.genre === selectedGenre : true;
-    return matchTitle && matchGenre;
+  const searchTerm    = searchInput.value.trim().toLowerCase();
+  const selectedGenre = genreFilter.value;
+  const sortOrder     = sortBy.value; // '', 'asc', 'desc'
+
+  let filtered = movies.filter(({ title, genre }) => {
+    const matchesTitle = title.toLowerCase().includes(searchTerm);
+    const matchesGenre = selectedGenre ? genre === selectedGenre : true;
+    return matchesTitle && matchesGenre;
   });
 
-  if (!filteredMovies.length) {
-    movieList.innerHTML = `<p class="no-results">No results found.</p>`;
+  if (!filtered.length) {
+    movieList.innerHTML = '<p class="no-results">No results found.</p>';
     return;
   }
 
-  // Sort if needed
-  if (sortOrder === 'asc') {
-    filteredMovies.sort((a, b) => a.year - b.year);
-  } else if (sortOrder === 'desc') {
-    filteredMovies.sort((a, b) => b.year - a.year);
-  }
+  
+  if (sortOrder === 'asc')  filtered.sort((a, b) => a.year - b.year);
+  if (sortOrder === 'desc') filtered.sort((a, b) => b.year - a.year);
 
-  movieList.innerHTML = filteredMovies.map(movie => `
+  // Build HTML 
+  movieList.innerHTML = filtered.map(movie => `
     <div class="movie-card">
       <img src="${movie.image}" alt="${movie.title} Poster" class="movie-poster" />
       <h3>${movie.title}</h3>
       <p><strong>Genre:</strong> ${movie.genre}</p>
       <p><strong>Year:</strong> ${movie.year}</p>
+
       <div class="vote-buttons">
-        <button class="upvote-btn" data-id="${movie.id}">👍 <span>${upvoteCounts[movie.id] || 0}</span></button>
+        <button class="upvote-btn"   data-id="${movie.id}">👍 <span>${upvoteCounts[movie.id]   || 0}</span></button>
         <button class="downvote-btn" data-id="${movie.id}">👎 <span>${downvoteCounts[movie.id] || 0}</span></button>
       </div>
+
       <button class="watch-trailer-btn" data-trailer="${movie.trailer}">🎬 Trailer</button>
+
       <div class="button-row">
-      <button class="edit-btn" data-id="${movie.id}">Edit</button>
-      <button class="delete-btn" data-id="${movie.id}">Delete</button>
+        <button class="edit-btn"   data-id="${movie.id}">Edit</button>
+        <button class="delete-btn" data-id="${movie.id}">Delete</button>
       </div>
     </div>
   `).join('');
 
+  // Attach dynamic listeners 
   addVoteListeners();
-
+  
   attachEditListeners();
-attachDeleteListeners();
+  attachDeleteListeners();
 
-   
-
-  // Add trailer button event listeners here, after rendering movies
-  document.querySelectorAll('.watch-trailer-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
-      lastFocusedElement = e.target;
-      const trailerUrl = e.target.getAttribute('data-trailer');
-      openModal(trailerUrl);
+  // Trailer buttons
+  document.querySelectorAll('.watch-trailer-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      lastFocusedElement = e.currentTarget;
+      openTrailerModal(e.currentTarget.dataset.trailer);
     });
   });
 
-  document.querySelectorAll('.movie-card').forEach((card, index) => {
-  card.addEventListener('click', (e) => {
-    // If click originated from a button (or inside one), skip
-    if (e.target.closest('button')) return;
-
-    const movie = filteredMovies[index];
-    openDetailsModal(movie);
+  // Card click ➜ Details modal (ignore clicks that originated inside <button>)
+  document.querySelectorAll('.movie-card').forEach((card, idx) => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('button')) return; // ignore buttons inside card
+      openDetailsModal(filtered[idx]);
+    });
   });
-});
-
-
 }
 
-function addVoteListeners() {
-  const upbuttons = document.querySelectorAll('.upvote-btn');
-  upbuttons.forEach(button => {
-    button.addEventListener('click', () => {
-      if (button.disabled) return; // prevent multiple rapid clicks
-      button.disabled = true;
-      setTimeout(() => button.disabled = false, 500);
-
-      const movieId = button.getAttribute('data-id');
-      let count = upvoteCounts[movieId] || 0;
-      count++;
-      upvoteCounts[movieId] = count;
-      button.querySelector('span').textContent = count;
+// Vote handling 
+function addVoteListeners () {
+  document.querySelectorAll('.upvote-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      btn.disabled = true; setTimeout(() => (btn.disabled = false), 500);
+      const id = btn.dataset.id;
+      upvoteCounts[id] = (upvoteCounts[id] || 0) + 1;
+      btn.querySelector('span').textContent = upvoteCounts[id];
       localStorage.setItem('upvoteCounts', JSON.stringify(upvoteCounts));
-      button.classList.add('upvote-animate');
-      setTimeout(() => button.classList.remove('upvote-animate'), 300);
+      btn.classList.add('upvote-animate');
+      setTimeout(() => btn.classList.remove('upvote-animate'), 300);
     });
   });
 
-  const downButtons = document.querySelectorAll('.downvote-btn');
-  downButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      if (button.disabled) return;
-      button.disabled = true;
-      setTimeout(() => button.disabled = false, 500);
-
-      const movieId = button.getAttribute('data-id');
-      let count = downvoteCounts[movieId] || 0;
-      count++;
-      downvoteCounts[movieId] = count;
-      button.querySelector('span').textContent = count;
+  document.querySelectorAll('.downvote-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      btn.disabled = true; setTimeout(() => (btn.disabled = false), 500);
+      const id = btn.dataset.id;
+      downvoteCounts[id] = (downvoteCounts[id] || 0) + 1;
+      btn.querySelector('span').textContent = downvoteCounts[id];
       localStorage.setItem('downvoteCounts', JSON.stringify(downvoteCounts));
-      button.classList.add('downvote-animate');
-      setTimeout(() => button.classList.remove('downvote-animate'), 300);
+      btn.classList.add('downvote-animate');
+      setTimeout(() => btn.classList.remove('downvote-animate'), 300);
     });
   });
 }
 
-// Toggle theme and save preference
-function toggleTheme() {
-  const isDark = document.body.classList.toggle('dark-mode');
-  localStorage.setItem('darkMode', isDark); // Save user choice
-  toggleDarkMode.textContent = isDark ? '☀️' : '🌙';
+// Theme toggling 
+function toggleTheme () {
+  const dark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', dark);
+  toggleDarkMode.textContent = dark ? '☀' : '🌙';
 }
 
-// Apply saved theme on first load
-function applySavedTheme() {
-  const isDark = localStorage.getItem('darkMode') === 'true';
-  if (isDark) {
-    document.body.classList.add('dark-mode');
-    toggleDarkMode.textContent = '☀️';
-  } else {
-    document.body.classList.remove('dark-mode');
-    toggleDarkMode.textContent = '🌙';
-  }
+function applySavedTheme () {
+  const dark = localStorage.getItem('darkMode') === 'true';
+  if (dark) document.body.classList.add('dark-mode');
+  toggleDarkMode.textContent = dark ? '☀' : '🌙';
 }
 
-// Modal related code
-const modal = document.getElementById('trailerModal');
-const trailerFrame = document.getElementById('trailerFrame');
-const closeBtn = document.querySelector('.close-btn');
 
-function openModal(url) {
+// Trailer modal 
+const trailerModal  = document.getElementById('trailerModal');
+const trailerFrame  = document.getElementById('trailerFrame');
+const trailerClose  = document.querySelector('.close-btn');
+
+function openTrailerModal (url) {
   if (!url) return;
-
-  // Convert YouTube URL to embeddable format
-  const videoIdMatch = url.match(/v=([^&]+)/);
-  const videoId = videoIdMatch ? videoIdMatch[1] : null;
+  const idMatch = url.match(/(?:v=|\.be\/)([^&]+)/);
+  const videoId = idMatch ? idMatch[1] : null;
   if (!videoId) return;
 
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-
-  trailerFrame.src = embedUrl;
-  modal.style.display = 'flex';
-
-  // Focus modal close button for accessibility
-  closeBtn.focus();
+  trailerFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  trailerModal.style.display = 'flex';
+  trailerClose.focus();
 }
 
-function closeModal() {
-  trailerFrame.src = ''; // stop video
-  modal.style.display = 'none';
-
-  // Return focus to last focused element (e.g., trailer button)
+function closeTrailerModal () {
+  trailerFrame.src = '';
+  trailerModal.style.display = 'none';
   if (lastFocusedElement) lastFocusedElement.focus();
 }
 
-closeBtn.addEventListener('click', closeModal);
-// Add this to your script.js
+trailerClose.addEventListener('click', closeTrailerModal);
+
+// Contact form 
 document.getElementById('contactForm').addEventListener('submit', handleContactForm);
 
-function handleContactForm(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const formMessage = document.getElementById('formMessage');
-    
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-        formMessage.innerHTML = 'Thank you for your message! We\'ll get back to you soon.';
-        formMessage.className = 'form-message success';
-        e.target.reset(); // Clear form
-    }, 1000);
-    
-    // Show loading state
-    formMessage.innerHTML = 'Sending message...';
-    formMessage.className = 'form-message';
+function handleContactForm (e) {
+  e.preventDefault();
+  const msgBox = document.getElementById('formMessage');
+  msgBox.textContent = 'Sending message...';
+  msgBox.className = 'form-message';
+
+  // Simulate async request 
+  setTimeout(() => {
+    msgBox.textContent = "Thank you for your message! We'll get back to you soon.";
+    msgBox.className = 'form-message success';
+    e.target.reset();
+  }, 1000);
 }
-function attachEditListeners() {
-  const editButtons = document.querySelectorAll('.edit-btn');
-  editButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      const id = e.target.dataset.id;
-      const movie = movies.find(m => m.id == id);
-      if (!movie) return;
 
-      currentEditId = id;
-      editTitle.value = movie.title;
-      editGenre.value = movie.genre;
-      editYear.value = movie.year;
+// Edit modal
 
-      editModal.style.display = 'flex';
-    });
-  });
-}
- 
-
-
-function attachDeleteListeners() {
-  const deleteButtons = document.querySelectorAll('.delete-btn');
-  deleteButtons.forEach(button => {
-    button.addEventListener('click', async (e) => {
-      const id = e.target.dataset.id;
-      const confirmDelete = confirm("Are you sure you want to delete this movie?");
-      if (confirmDelete) {
-        await fetch(`http://localhost:3000/movies/${id}`, {
-          method: 'DELETE'
-        });
-        fetchMovies(); // re-fetch and re-render
-      }
-    });
-  });
-}
-const editModal = document.getElementById('editModal');
-const closeEditBtn = document.querySelector('.close-edit-btn');
-const editForm = document.getElementById('editForm');
+const editModal   = document.getElementById('editModal');
+const editClose   = document.querySelector('.close-edit-btn');
+const editForm    = document.getElementById('editForm');
+const editTitle   = document.getElementById('editTitle');
+const editGenre   = document.getElementById('editGenre');
+const editYear    = document.getElementById('editYear');
 let currentEditId = null;
 
-const editTitle = document.getElementById('editTitle');
-const editGenre = document.getElementById('editGenre');
-const editYear = document.getElementById('editYear');
+function attachEditListeners () {
+  document.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const movie = movies.find(m => m.id == id);
+      if (!movie) return;
+      currentEditId  = id;
+      editTitle.value = movie.title;
+      editGenre.value = movie.genre;
+      editYear.value  = movie.year;
+      editModal.style.display = 'flex';
+      editClose.focus();
+    });
+  });
+}
 
-closeEditBtn.addEventListener('click', () => {
+editClose.addEventListener('click', () => {
   editModal.style.display = 'none';
   currentEditId = null;
 });
-editForm.addEventListener('submit', async (e) => {
+
+editForm.addEventListener('submit', async e => {
   e.preventDefault();
   if (!currentEditId) return;
-
-  const updatedMovie = {
+  const updated = {
     title: editTitle.value.trim(),
     genre: editGenre.value.trim(),
-    year: parseInt(editYear.value)
+    year: parseInt(editYear.value, 10)
   };
 
   await fetch(`http://localhost:3000/movies/${currentEditId}`, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(updatedMovie)
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updated)
   });
 
-  currentEditId = null;
+
   editModal.style.display = 'none';
-  fetchMovies(); // Re-render the list
-});
-const addModal = document.getElementById('addModal');
-const addForm = document.getElementById('addForm');
-const addMovieBtn = document.getElementById('addMovieBtn');
-const closeAddBtn = document.querySelector('.close-add-btn');
-
-const addTitle = document.getElementById('addTitle');
-const addGenre = document.getElementById('addGenre');
-const addYear = document.getElementById('addYear');
-const addImage = document.getElementById('addImage');
-const addTrailer = document.getElementById('addTrailer');
-addMovieBtn.addEventListener('click', () => {
-  addModal.style.display = 'flex';
+  currentEditId = null;
+  fetchMovies();
 });
 
-closeAddBtn.addEventListener('click', () => {
+// Delete
+function attachDeleteListeners () {
+  document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.id;
+      if (!confirm('Are you sure you want to delete this movie?')) return;
+      await fetch(`http://localhost:3000/movies/${id}`, { method: 'DELETE' });
+      fetchMovies();
+    });
+  });
+}
+
+
+const addModal  = document.getElementById('addModal');
+const addForm   = document.getElementById('addForm');
+const addBtn    = document.getElementById('addMovieBtn');
+const addClose  = document.querySelector('.close-add-btn');
+const addTitle  = document.getElementById('addTitle');
+const addGenre  = document.getElementById('addGenre');
+const addYear   = document.getElementById('addYear');
+const addImage  = document.getElementById('addImage');
+const addTrailer= document.getElementById('addTrailer');
+
+addBtn  .addEventListener('click', () => addModal.style.display = 'flex');
+addClose.addEventListener('click', () => {
   addModal.style.display = 'none';
   addForm.reset();
 });
-addForm.addEventListener('submit', async (e) => {
+
+addForm.addEventListener('submit', async e => {
   e.preventDefault();
 
   const newMovie = {
-    title: addTitle.value.trim(),
-    genre: addGenre.value.trim(),
-    year: parseInt(addYear.value),
-    image: addImage.value.trim() || 'https://via.placeholder.com/200x300',
+    title:   addTitle.value.trim(),
+    genre:   addGenre.value.trim(),
+    year:    parseInt(addYear.value, 10),
+    image:   addImage.value.trim()   || 'https://via.placeholder.com/200x300',
     trailer: addTrailer.value.trim()
   };
 
@@ -360,35 +324,36 @@ addForm.addEventListener('submit', async (e) => {
 
   addModal.style.display = 'none';
   addForm.reset();
-  fetchMovies(); // re-render movie list
+  fetchMovies();
 });
-const detailsModal = document.getElementById('detailsModal');
-const detailsContent = document.getElementById('detailsContent');
-const detailsCloseBtn = document.getElementById('detailsCloseBtn');
 
-function openDetailsModal(movie) {
+
+// Details modal 
+
+const detailsModal  = document.getElementById('detailsModal');
+const detailsContent= document.getElementById('detailsContent');
+const detailsClose  = document.getElementById('detailsCloseBtn');
+
+function openDetailsModal (movie) {
   detailsContent.innerHTML = `
     <h2>${movie.title} (${movie.year})</h2>
     <img src="${movie.image}" alt="${movie.title} Poster" style="max-width:200px; float:right; margin-left:1rem; border-radius:8px;" />
     <p><strong>Genre:</strong> ${movie.genre}</p>
     <p><strong>Description:</strong> ${movie.description || 'No description available.'}</p>
     <p><strong>Director:</strong> ${movie.director || 'Unknown'}</p>
-    <p><strong>Cast:</strong> ${movie.cast ? movie.cast.join(', ') : 'Unknown'}</p>
+    <p><strong>Cast:</strong> ${(movie.cast || []).join(', ') || 'Unknown'}</p>
     <div style="clear:both;"></div>
   `;
   detailsModal.style.display = 'flex';
-  detailsCloseBtn.focus();
+  detailsClose.focus();
 }
 
-function closeDetailsModal() {
+function closeDetailsModal () {
   detailsModal.style.display = 'none';
 }
 
-// Close modal on clicking close button or Escape key
-detailsCloseBtn.addEventListener('click', closeDetailsModal);
-document.addEventListener('keydown', (e) => {
-  if (e.key === "Escape" && detailsModal.style.display === 'flex') {
-    closeDetailsModal();
-  }
-});
+detailsClose.addEventListener('click', closeDetailsModal);
+
+
+
 

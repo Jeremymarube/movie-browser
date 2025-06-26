@@ -809,3 +809,40 @@ body.dark-mode #editModal select.error {
   transform: none;
   box-shadow: none;
 }
+/* Add to your styles.css file */
+
+nav {
+  background-color: #111;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end; 
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li a {
+  color: gold;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.navbar li a:hover,
+.navbar li a:focus {
+  background-color: #444;
+  color: #fff;
+}
+html {
+  scroll-behavior: smooth;
+}
