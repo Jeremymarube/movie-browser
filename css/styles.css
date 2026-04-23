@@ -814,3 +814,675 @@ button[type="submit"]:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: #808080;
 }
+
+
+/* ============ TABLET RESPONSIVE (768px - 1024px) ============ */
+@media (max-width: 1024px) and (min-width: 769px) {
+  /* Header adjustments */
+  header {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand nav"
+      "tagline tagline"
+      "controls controls"
+      "actions actions";
+    gap: 0.8rem;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  header > p {
+    font-size: 0.85rem;
+  }
+  
+  .navbar {
+    gap: 0.25rem;
+  }
+  
+  .navbar li a {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Controls */
+  .controls {
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  
+  .search-box {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  select, #toggleDarkMode {
+    min-width: 100px;
+  }
+  
+  /* Movie grid - 4 columns on tablet */
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+    margin: 1rem 0 2rem;
+  }
+  
+  /* Horizontal scroll sections */
+  .horizontal-scroll .movie-card {
+    width: 160px;
+  }
+  
+  /* Section titles */
+  .movie-section {
+    margin: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+  }
+  
+  /* Modal adjustments */
+  .modal-content {
+    width: 85%;
+    max-width: 700px;
+  }
+  
+  .details-content-wrapper {
+    gap: 1.2rem;
+    padding: 1.2rem;
+    margin-top: -80px;
+  }
+  
+  .details-poster img {
+    width: 150px;
+  }
+  
+  .details-info h2 {
+    font-size: 1.6rem;
+  }
+  
+  /* Contact section */
+  .contact-section {
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  
+  /* Footer */
+  .tmdb-footer {
+    padding: 1.5rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* ============ MOBILE RESPONSIVE (up to 768px) ============ */
+@media (max-width: 768px) {
+  /* Header - Stack everything vertically */
+  header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "tagline"
+      "nav"
+      "controls"
+      "actions";
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+  }
+  
+  h1 {
+    font-size: 1.3rem;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  header > p {
+    font-size: 0.8rem;
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  /* Navigation - full width on mobile */
+  nav {
+    justify-self: stretch;
+    width: 100%;
+  }
+  
+  .navbar {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    padding: 0.3rem;
+  }
+  
+  .navbar li a {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Controls - column layout on mobile */
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    width: 100%;
+  }
+  
+  .search-box {
+    width: 100%;
+    min-width: auto;
+    max-width: none;
+  }
+  
+  #searchInput {
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  #searchButton {
+    width: 44px;
+    height: 44px;
+  }
+  
+  select, #toggleDarkMode {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  /* Button bar */
+  .button-bar {
+    justify-self: stretch;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .add-movie-btn {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  main {
+    padding-top: 0.5rem;
+  }
+  
+  /* Section titles */
+  .movie-section {
+    margin: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  /* Movie grid - 3 columns on mobile */
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.4rem;
+    padding: 0 1rem;
+    margin: 0.5rem 0 1.5rem;
+  }
+  
+  /* Horizontal scroll for trending/suggestions */
+  .scroll-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .horizontal-scroll {
+    display: flex;
+    flex-direction: row;
+    gap: 0.4rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .horizontal-scroll .movie-card {
+    flex: 0 0 auto;
+    width: 130px;
+  }
+  
+  /* Movie cards - touch optimized */
+  .movie-card {
+    transform: none !important; /* Disable scale animation on mobile */
+  }
+  
+  .movie-card:active {
+    transform: scale(0.98) !important;
+  }
+  
+  .movie-poster {
+    border-radius: 6px;
+  }
+  
+  /* Hide hover effects on mobile */
+  .movie-card:hover {
+    transform: none;
+  }
+  
+  .movie-card:hover .movie-poster {
+    box-shadow: none;
+  }
+  
+  .vote-buttons,
+  .button-row {
+    opacity: 1; /* Always visible on mobile */
+  }
+  
+  /* Make buttons larger for touch */
+  .upvote-btn, .downvote-btn,
+  .edit-btn, .delete-btn,
+  .watch-trailer-btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+    min-height: 32px;
+  }
+  
+  /* Modal - full screen on mobile */
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+    border-radius: 12px;
+  }
+  
+  /* Details modal mobile layout */
+  .details-container {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .details-content-wrapper {
+    flex-direction: column;
+    margin-top: -60px;
+    padding: 0.8rem;
+    gap: 0.8rem;
+  }
+  
+  .details-poster {
+    text-align: center;
+  }
+  
+  .details-poster img {
+    width: 130px;
+    margin: 0 auto;
+  }
+  
+  .details-backdrop {
+    height: 180px;
+  }
+  
+  .details-info h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .details-year {
+    font-size: 0.9rem;
+  }
+  
+  .details-info p {
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+  
+  .details-vote-buttons {
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
+  
+  .details-action-buttons {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .trailer-btn, .edit-btn, .delete-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    min-height: 40px;
+  }
+  
+  /* Trailer modal */
+  #trailerModal .modal-content {
+    width: 98%;
+  }
+  
+  #trailerModal iframe {
+    height: 250px;
+  }
+  
+  /* Edit/Add modals */
+  #editModal .modal-content,
+  #addModal .modal-content {
+    padding: 1rem;
+    width: 95%;
+  }
+  
+  #editModal h2,
+  #addModal h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group {
+    margin-bottom: 0.8rem;
+  }
+  
+  .form-group label {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  button[type="submit"] {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Contact section */
+  .contact-section {
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .contact-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  #contactForm {
+    gap: 0.5rem;
+  }
+  
+  /* Footer */
+  .tmdb-footer {
+    padding: 1rem;
+    font-size: 0.65rem;
+  }
+  
+  .tmdb-footer p {
+    margin-bottom: 0.3rem;
+  }
+}
+
+/* ============ SMALL MOBILE (up to 480px) ============ */
+@media (max-width: 480px) {
+  header {
+    padding: 0.6rem 0.8rem;
+  }
+  
+  h1 {
+    font-size: 1.1rem;
+  }
+  
+  header > p {
+    font-size: 0.7rem;
+  }
+  
+  .navbar li a {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+  }
+  
+  .movie-section {
+    margin: 0.8rem;
+  }
+  
+  .section-title {
+    font-size: 1rem;
+  }
+  
+  /* Movie grid - 2 columns on small mobile */
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.3rem;
+    padding: 0 0.8rem;
+  }
+  
+  .horizontal-scroll .movie-card {
+    width: 110px;
+  }
+  
+  .details-backdrop {
+    height: 150px;
+  }
+  
+  .details-content-wrapper {
+    margin-top: -50px;
+  }
+  
+  .details-poster img {
+    width: 100px;
+  }
+  
+  .details-info h2 {
+    font-size: 1.1rem;
+  }
+  
+  .details-year {
+    font-size: 0.8rem;
+  }
+  
+  .details-info p {
+    font-size: 0.7rem;
+  }
+  
+  .upvote-btn, .downvote-btn {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.65rem;
+  }
+  
+  .trailer-btn, .edit-btn, .delete-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.7rem;
+  }
+  
+  .contact-section {
+    padding: 1rem;
+  }
+  
+  .contact-section h2 {
+    font-size: 1.1rem;
+  }
+  
+  .form-group label {
+    font-size: 0.75rem;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  #trailerModal iframe {
+    height: 200px;
+  }
+}
+
+/* ============ TOUCH DEVICE OPTIMIZATIONS ============ */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on touch devices */
+  .movie-card:hover {
+    transform: none;
+  }
+  
+  .movie-card:hover .movie-poster {
+    box-shadow: none;
+  }
+  
+  .movie-card:hover h3,
+  .movie-card:hover p {
+    display: none;
+  }
+  
+  /* Better touch feedback */
+  .movie-card:active {
+    transform: scale(0.98);
+  }
+  
+  button:active,
+  .add-movie-btn:active,
+  .navbar li a:active {
+    transform: scale(0.96);
+    opacity: 0.8;
+  }
+  
+  /* Increase touch targets */
+  button,
+  .movie-card,
+  .navbar li a,
+  .close-btn,
+  .close-edit-btn,
+  .close-add-btn {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ============ LANDSCAPE MODE ON MOBILE ============ */
+@media (max-width: 768px) and (orientation: landscape) {
+  header {
+    padding: 0.5rem 1rem;
+  }
+  
+  h1 {
+    font-size: 1rem;
+  }
+  
+  .controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .search-box {
+    flex: 1;
+  }
+  
+  select, #toggleDarkMode {
+    width: auto;
+    min-width: 80px;
+  }
+  
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  
+  .modal-content {
+    max-height: 90vh;
+  }
+  
+  .details-backdrop {
+    height: 140px;
+  }
+  
+  .details-content-wrapper {
+    margin-top: -40px;
+  }
+}
+
+/* ============ LARGE DESKTOP (1200px+) ============ */
+@media (min-width: 1200px) {
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 0 4rem;
+  }
+  
+  .horizontal-scroll .movie-card {
+    width: 200px;
+  }
+  
+  .movie-section {
+    margin: 2rem 4rem;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* ============ ACCESSIBILITY & SAFE AREAS ============ */
+/* Safe area insets for notched phones */
+@supports (padding: max(0px)) {
+  header,
+  .movie-section,
+  .contact-section,
+  .tmdb-footer {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  
+  .modal-content {
+    margin-left: env(safe-area-inset-left);
+    margin-right: env(safe-area-inset-right);
+  }
+}
+
+/* Prevent zoom on input focus on iOS */
+@media (max-width: 768px) {
+  input, 
+  select, 
+  textarea, 
+  button {
+    font-size: 16px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .controls,
+  .button-bar,
+  .navbar,
+  #toggleDarkMode,
+  .vote-buttons,
+  .watch-trailer-btn,
+  .edit-btn,
+  .delete-btn,
+  .modal,
+  .contact-section,
+  .tmdb-footer {
+    display: none !important;
+  }
+  
+  .movie-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  .movie-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  body {
+    background-color: white;
+    color: black;
+  }
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
