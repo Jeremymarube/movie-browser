@@ -1,848 +1,816 @@
-body {
-  font-family: Arial, sans-serif;
+/* ============ NETFLIX-STYLE CSS ============ */
+/* Base Reset & Typography */
+* {
   margin: 0;
   padding: 0;
-  background: #fff;
-  color: #222;
-  transition: background 0.3s, color 0.3s;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Netflix Sans', 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
+  background-color: #141414;
+  color: #e5e5e5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ============ HEADER / NAVBAR (Netflix Style) ============ */
 header {
-  background: #ffffff;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "brand tagline nav"
+    "controls controls actions";
+  align-items: center;
+  gap: 0.9rem 1.2rem;
+  padding: 1rem clamp(1rem, 4vw, 3rem) 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 20, 0.92) 100%);
+  border-bottom: 1px solid rgba(229, 9, 20, 0.18);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
 }
 
+header.scrolled {
+  background: #141414;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
 
-.controls {
-  margin-top: 1rem;
+h1 {
+  grid-area: brand;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #e50914;
+  letter-spacing: -0.6px;
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1;
+  margin: 0;
+  text-shadow: 0 6px 18px rgba(229, 9, 20, 0.28);
 }
 
-input, select, button {
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #333;
+header > p {
+  grid-area: tagline;
+  margin: 0;
+  color: #bdbdbd;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  max-width: 34rem;
+}
+
+nav {
+  grid-area: nav;
+  justify-self: end;
+}
+
+.navbar {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.navbar li a {
+  color: #e5e5e5;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.2rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.navbar li a:hover {
+  color: #fff;
+  background-color: rgba(229, 9, 20, 0.2);
+}
+
+/* ============ HERO SECTION (Featured Movie) ============ */
+.hero {
+  position: relative;
+  height: 85vh;
+  min-height: 500px;
+  background-size: cover;
+  background-position: center top;
+  margin-bottom: 2rem;
+}
+
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to top, #141414 0%, transparent 100%);
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 25%;
+  left: 4rem;
+  max-width: 600px;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-play, .btn-info {
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
+.btn-play {
+  background-color: white;
+  color: black;
+}
+
+.btn-play:hover {
+  background-color: rgba(255,255,255,0.75);
+}
+
+.btn-info {
+  background-color: rgba(109,109,110,0.7);
+  color: white;
+}
+
+.btn-info:hover {
+  background-color: rgba(109,109,110,0.4);
+}
+
+/* ============ CONTROLS / SEARCH BAR ============ */
+.controls {
+  grid-area: controls;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  flex: 1 1 320px;
+  min-width: min(100%, 18rem);
+  max-width: 28rem;
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+#searchInput {
+  background: transparent;
+  border: none;
+  padding: 0.85rem 1rem;
+  color: white;
+  font-size: 0.9rem;
+  width: 100%;
+  min-width: 0;
+  outline: none;
+}
+
+#searchInput::placeholder {
+  color: #909090;
+}
+
+#searchButton {
+  background: linear-gradient(135deg, #e50914, #b00610);
+  border: none;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+#searchButton img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+
+select {
+  min-height: 44px;
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: white;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+}
+
+select option {
+  background-color: #141414;
+}
+
+#toggleDarkMode {
+  min-height: 44px;
+  min-width: 44px;
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: white;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.button-bar {
+  grid-area: actions;
+  margin: 0;
+  justify-self: end;
+  text-align: right;
+}
+
+.add-movie-btn {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  min-height: 44px;
+  padding: 0.75rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 24px rgba(229, 9, 20, 0.24);
+}
+
+.add-movie-btn:hover {
+  background-color: #f40612;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(229, 9, 20, 0.3);
+}
+
+main {
+  padding-top: 1.25rem;
+}
+
+/* ============ MOVIE GRID (Netflix Row Style) ============ */
 .movie-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.3rem;
+  padding: 0 3rem;
+  margin: 1rem 0 3rem;
 }
 
 .movie-card {
-  background: #ffffff;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease;
+  background: transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
 }
+
 .movie-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-
+  transform: scale(1.05);
+  z-index: 10;
 }
 
-
-/* Dark Mode */
-body.dark-mode {
-  background: #121212;
-  color: #e0e0e0;
+.movie-card:hover .movie-poster {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
-body.dark-mode header {
-  background: #1f1f1f;
-}
-
-body.dark-mode .movie-card {
-  background: #1e1e1e;
-  color: #e0e0e0;
-}
-
-body.dark-mode input,
-body.dark-mode select,
-body.dark-mode button {
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #555;
-}
-h1 {
-  color: #f4b400;
-}
-input:focus,
-select:focus,
-button:focus {
-  outline: none;
-  border-color: #007acc;
-  box-shadow: 0 0 4px rgba(0, 122, 204, 0.3);
-}
-.upvote-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
+.movie-poster {
+  width: 100%;
   border-radius: 4px;
-  padding: 0.3rem 0.6rem;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: background-color 0.3s;
+  transition: box-shadow 0.3s ease;
 }
 
-.upvote-btn:hover {
-  background: #218838;
+.movie-card h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0.5rem 0 0.2rem;
+  display: none; /* Netflix hides title on card, shows on hover */
 }
 
-/* Animation class */
-.upvote-animate {
-  animation: popScale 0.3s ease forwards;
-}
-body:not(.dark-mode) .upvote-btn {
-  background-color: #28a745;
-}
-body:not(.dark-mode) .upvote-btn:hover {
-  background-color: #218838;
+.movie-card:hover h3 {
+  display: block;
 }
 
-@keyframes popScale {
-  0% { transform: scale(1); color: #000; }
-  50% { transform: scale(1.2); background-color: #34ce57; }
-  100% { transform: scale(1); color: #000; }
-}
-.downvote-btn {
-  background: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0.3rem 0.6rem;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: background-color 0.3s;
+.movie-card p {
+  font-size: 0.8rem;
+  color: #8c8c8c;
+  margin: 0.2rem 0;
+  display: none;
 }
 
-.downvote-btn:hover {
-  background: #c82333;
+.movie-card:hover p {
+  display: block;
 }
 
-/* Downvote animation */
-.downvote-animate {
-  animation: shake 0.3s ease forwards;
-}
-body:not(.dark-mode) .downvote-btn {
-  background-color: #dc3545;
-}
-body:not(.dark-mode) .downvote-btn:hover {
-  background-color: #c82333;
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  50% { transform: translateX(3px); }
-  75% { transform: translateX(-3px); }
-  100% { transform: translateX(0); }
-}
-
-/* Optional container for buttons */
+/* Vote buttons - Netflix style */
 .vote-buttons {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.search-icon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  opacity: 0.6;
-  pointer-events: none;
-  color: #ffb700;
+.movie-card:hover .vote-buttons {
+  opacity: 1;
 }
 
-.search-container input {
-  padding-left: 2.2rem; /* make room for the icon */
-  height: 2rem;
-  font-size: 1rem;
-}
-#searchInput {
-  background-size: 24px 24px;
-  padding-right: 2.2rem; /* space so text doesn't overlap icon */
-  font-size: 1rem;
-  height: 2rem;
-}
-.search-box {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
+.upvote-btn, .downvote-btn {
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: white;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  overflow: hidden;
-  width: fit-content;
-}
-
-#searchInput {
-  border: none;
-  padding: 0.5rem;
-  font-size: 1rem;
-  outline: none;
-}
-
-#searchButton {
-  background: yellow;
-  border: none;
-  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
   cursor: pointer;
-  border-left: 1px solid ;
+  transition: all 0.2s ease;
 }
 
-#searchButton img {
-  width: 24px;
-  height: 24px;
-}
-.no-results {
-  font-size: 1.2rem;
-  color: #888;
-  text-align: center;
-  margin-top: 2rem;
-}
-.contact-section {
-  padding: 2rem;
-  background-color: #fff;
-  text-align: center;
-  color: #721c24;
-}
-body.dark-mode .contact-section {
-  background-color: #000;
-  color: gold; /* brighter text for dark mode */
+.upvote-btn:hover {
+  background-color: #4caf50;
 }
 
-.form-group label {
-  font-weight: bold;
-  font-size: 1rem;
-  color: #000; /* readable on white */
+.downvote-btn:hover {
+  background-color: #f44336;
 }
 
-body.dark-mode .form-group label {
-  color: gold;
-}
-#contactForm {
-    max-width: 600px;
-    margin: auto;
-    display: flex;
-    flex-direction: column; /* Changed from row to column */
-    gap: 1rem;
+/* Button row (Edit/Delete) */
+.button-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
+.movie-card:hover .button-row {
+  opacity: 1;
 }
 
-.form-group label {
-    font-weight: bold;
-    font-size: 1rem;
-    color: #000;
-    margin-bottom: 0.3rem;
-}
-body.dark-mode .form-group label {
-  color: gold; /* Or another readable color for dark mode */
-}
-#addForm input {
-  padding: 0.5rem;
-  font-size: 1rem;
+.edit-btn, .delete-btn, .watch-trailer-btn {
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: white;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-body.dark-mode #addForm input {
-  background-color: #333;
-  color: #fff;
-  border: 1px solid #555;
+.edit-btn:hover {
+  background-color: #007bff;
 }
 
-.form-message {
-    margin-top: 1rem;
-    padding: 0.5rem;
-    border-radius: 4px;
-    text-align: center;
+.delete-btn:hover {
+  background-color: #dc3545;
 }
 
-.form-message.success {
-    background-color: #d4edda;
-    color: #155724;
+.watch-trailer-btn {
+  background-color: #e50914;
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.4rem;
+  font-weight: 600;
 }
 
-.form-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
+.watch-trailer-btn:hover {
+  background-color: #f40612;
 }
 
-@media (max-width: 600px) {
-  .controls {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .movie-card {
-    font-size: 0.9rem;
-    background: #f9f9f9;
-  border: 1px solid #ddd;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-  }
-
-  .movie-list {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
+.disabled-btn {
+  background-color: #404040 !important;
+  cursor: not-allowed !important;
+  opacity: 0.5;
 }
+
+/* TMDB Badge */
+.tmdb-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.8);
+  color: #01d277;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* ============ MODALS (Netflix Style) ============ */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.85);
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
-  position: relative;
-  width: 90%;
+  background-color: #181818;
+  border-radius: 8px;
   max-width: 800px;
-  background-color: #000;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-.close-btn {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 1.5rem;
-  color: #fff;
-  cursor: pointer;
-  z-index: 1;
-}
-.watch-trailer-btn {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 6px 12px;
-  background-color: white;
-  color: gold;
-  border-radius: 4px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 1rem;
-  text-align: center;
-}
-
-.watch-trailer-btn:hover {
-  background-color: white;
-  color: gold;
-}
-body:not(.dark-mode) .watch-trailer-btn {
-  background-color: #222;
-  color: gold;
-}
-
-body:not(.dark-mode) .watch-trailer-btn:hover {
-  background-color: #444;
-}
-
-.add-btn {
-  margin-left: auto;
-  background-color: #28a745;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.add-btn:hover {
-  background-color: #218838;
-}
-#detailsModal .modal-content {
-  background-color: #222;
-  color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 600px;
   width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
   position: relative;
-}
-#detailsModal img {
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-#detailsCloseBtn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #000; /* Dark color for light mode */
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  cursor: pointer;
-  z-index: 10;
+  animation: modalFadeIn 0.3s ease;
 }
 
-body.dark-mode #detailsCloseBtn {
-  color: #fff; /* White for dark mode */
-}
-.edit-btn {
- padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-.edit-btn {
-  background-color: #007bff;
-  color: white;
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.edit-btn:hover {
-  background-color: #0056b3;
-}
-.button-bar {
-  display: flex;
-  justify-content: flex-end;  /* Pushes button to the right */
-  padding: 1rem;              /* Optional spacing */
-}
-
-.add-movie-btn {
-  background-color: #28a745;
-  color: white;
-  padding: 10px 16px;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.add-movie-btn:hover {
-  background-color: #218838;
-}
-.delete-btn {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.delete-btn:hover {
-  background-color: #a71d2a;
-}
-/* Modal content form styling */
-#addModal form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-#addModal label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-  font-size: 1rem;
-  color: #000;
-}
-body.dark-mode #addModal label {
-  color: gold; /* Readable in dark background */
-}
-
-#addModal input[type="text"],
-#addModal input[type="number"] {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-top: 0.3rem;
-  transition: border-color 0.3s;
-}
-
-#addModal input[type="text"]:focus,
-#addModal input[type="number"]:focus {
-  outline: none;
-  border-color: #007bff; /* blue focus */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-#addModal button[type="submit"] {
-  background-color: #28a745;
-  color: white;
-  font-weight: 700;
-  padding: 0.6rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#addModal button[type="submit"]:hover {
-  background-color: #218838;
-}
-
-/* Optional: Add some spacing inside modal-content */
-#addModal .modal-content {
-  padding: 2rem 2rem 3rem 2rem;
-  position: relative;
-  border-radius: 10px;
-  background-color: #fff; /* Light mode */
-  color: #000;
-}
-body.dark-mode #addModal .modal-content {
-  background-color: #000;
-  color: #fff;
-}
-#addModal label {
-  display: block;           /* Makes label take full width */
-  font-weight: 600;         /* Bold titles */
-  font-size: 1.1rem;        /* Slightly larger font for emphasis */
-  color: var(--text-color, #000);  /* Use theme text color */
-  margin-bottom: 0.3rem;    /* Space below title before input */
-  cursor: pointer;          /* Indicates clickable labels for accessibility */
-}
-.button-row {
-  display: flex;
-  gap: 0.5rem; /* spacing between buttons */
-  margin-top: 0.5rem;
-  justify-content: space-between; /* or center / space-between */
-}
-
-.button-row .edit-btn,
-.button-row .delete-btn {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-button {
-  background-color: #007BFF; /* A strong blue for visibility */
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-/* Labels */
-label {
-  color: #111;
-  font-weight: 600;
-  margin-bottom: 4px;
-  display: block;
-}
-
-/* Links or other elements that might be hard to see */
-a {
-  color: #007BFF;
-}
-
-a:hover {
-  color: #0056b3;
-}
-body.dark-mode {
-  background-color: #121212;
-  color: #ddd;
-}
-
-body.dark-mode button {
-  background-color: #444;
-  color: #eee;
-}
-/* Edit Modal Base Styles */
-#editModal .modal-content {
-  background-color: #ffffff;
-  color: #333;
-  padding: 2rem 2rem 3rem 2rem;
-  border-radius: 12px;
-  max-width: 350px;
-  width: 85%;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Edit Modal Form Layout */
-#editModal form,
-#editForm {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-/* Form Groups */
-#editModal .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-/* Labels */
-#editModal .form-group label,
-#editForm label {
-  font-weight: 600;
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 0.3rem;
-  display: block;
-}
-
-/* Input Fields */
-#editModal input,
-#editModal textarea,
-#editModal select {
-  background-color: #f8f9fa;
-  color: #333;
-  border: 2px solid #e9ecef;
-  padding: 0.75rem;
-  border-radius: 8px;
-  width: 100%;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-/* Input Focus States */
-#editModal input:focus,
-#editModal textarea:focus,
-#editModal select:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-  background-color: #fff;
-}
-
-/* Submit Button */
-#editModal button[type="submit"] {
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  padding: 0.875rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  margin-top: 1rem;
-}
-
-#editModal button[type="submit"]:hover {
-  background-color: #0056b3;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-}
-
-#editModal button[type="submit"]:active {
-  transform: translateY(0);
-}
-
-/* Close Button */
-#editModal .close-edit-btn {
+.close-btn, .close-edit-btn, .close-add-btn {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: #f8f9fa;
+  background: #181818;
   border: none;
-  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+  z-index: 10;
   width: 36px;
   height: 36px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: #6c757d;
-  transition: all 0.2s ease;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  transition: background-color 0.2s ease;
 }
 
-#editModal .close-edit-btn:hover {
-  background: #e9ecef;
-  color: #495057;
-  transform: scale(1.1);
+.close-btn:hover, .close-edit-btn:hover, .close-add-btn:hover {
+  background-color: #404040;
 }
 
-/* DARK MODE STYLES */
-body.dark-mode #editModal .modal-content {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  border: 1px solid #333;
+/* Details Modal */
+#detailsModal .modal-content {
+  background: #181818;
+  padding: 2rem;
 }
 
-body.dark-mode #editModal .form-group label,
-body.dark-mode #editForm label {
-  color: #ffd700;
-}
-
-body.dark-mode #editModal input,
-body.dark-mode #editModal textarea,
-body.dark-mode #editModal select {
-  background-color: #2a2a2a;
-  color: #e0e0e0;
-  border: 2px solid #404040;
-}
-
-body.dark-mode #editModal input:focus,
-body.dark-mode #editModal textarea:focus,
-body.dark-mode #editModal select:focus {
-  border-color: #ffd700;
-  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
-  background-color: #333;
-}
-
-body.dark-mode #editModal button[type="submit"] {
-  background-color: #ffd700;
-  color: #000;
-}
-
-body.dark-mode #editModal button[type="submit"]:hover {
-  background-color: #e6c200;
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
-}
-
-body.dark-mode #editModal .close-edit-btn {
-  background: #333;
-  color: #ccc;
-}
-
-body.dark-mode #editModal .close-edit-btn:hover {
-  background: #444;
-  color: #fff;
-}
-
-/* Modal Title */
-#editModal h2 {
-  margin: 0 0 1.5rem 0;
-  color: #333;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-body.dark-mode #editModal h2 {
-  color: #ffd700;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  #editModal .modal-content {
-    width: 95%;
-    padding: 1.5rem;
-    margin: 1rem;
-  }
-  
-  #editModal form,
-  #editForm {
-    gap: 1rem;
-  }
-  
-  #editModal button[type="submit"] {
-    padding: 0.75rem 1.25rem;
-  }
-}
-
-/* Error States */
-#editModal input.error,
-#editModal textarea.error,
-#editModal select.error {
-  border-color: #dc3545;
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
-}
-
-body.dark-mode #editModal input.error,
-body.dark-mode #editModal textarea.error,
-body.dark-mode #editModal select.error {
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
-}
-
-/* Loading State */
-#editModal button[type="submit"]:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-  transform: none;
-}
-
-#editModal button[type="submit"]:disabled:hover {
-  background-color: #6c757d;
-  transform: none;
-  box-shadow: none;
-}
-/* Add to your styles.css file */
-
-nav {
-  background-color: #111;
-  padding: 10px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.navbar {
-  list-style: none;
-  display: flex;
-  justify-content: flex-end; 
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-}
-
-.navbar li a {
-  color: gold;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 8px 12px;
+#detailsModal img {
+  max-width: 200px;
   border-radius: 4px;
-  transition: background 0.3s ease, color 0.3s ease;
+  margin-bottom: 1rem;
 }
 
-.navbar li a:hover,
-.navbar li a:focus {
-  background-color: #444;
-  color: #fff;
+#detailsModal h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
 }
-html {
-  scroll-behavior: smooth;
+
+#detailsModal p {
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+/* Trailer Modal */
+#trailerModal .modal-content {
+  background: black;
+  padding: 0;
+  max-width: 1000px;
+}
+
+#trailerFrame {
+  width: 100%;
+  height: 500px;
+}
+
+/* ============ FORMS (Netflix Style) ============ */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #e5e5e5;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #333;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #e50914;
+}
+
+button[type="submit"] {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #f40612;
+}
+
+/* ============ CONTACT SECTION ============ */
+.contact-section {
+  margin-top: 4rem;
+  padding: 3rem;
+  border-top: 1px solid #333;
+  background: #141414;
+}
+
+.contact-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+#contactForm {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-message {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+}
+
+.form-message.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.form-message.error {
+  background-color: #f44336;
+  color: white;
+}
+
+/* ============ FOOTER / TMDB ATTRIBUTION ============ */
+.tmdb-footer {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid #333;
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: #808080;
+}
+
+.tmdb-footer a {
+  color: #808080;
+  text-decoration: none;
+}
+
+.tmdb-footer a:hover {
+  color: #e5e5e5;
+}
+
+/* ============ LOADING SPINNER ============ */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #333;
+  border-top: 3px solid #e50914;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ============ NO RESULTS ============ */
+.no-results {
+  text-align: center;
+  padding: 4rem;
+  color: #808080;
+  font-size: 1.2rem;
+}
+
+/* ============ RESPONSIVE DESIGN ============ */
+@media (max-width: 1024px) {
+  header {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand nav"
+      "tagline tagline"
+      "controls controls"
+      "actions actions";
+  }
+  
+  .controls {
+    gap: 0.75rem;
+  }
+  
+  .movie-list {
+    padding: 0 2rem;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "tagline"
+      "nav"
+      "controls"
+      "actions";
+    gap: 0.75rem;
+  }
+  
+  h1 {
+    font-size: 1.35rem;
+  }
+  
+  header > p {
+    font-size: 0.9rem;
+  }
+
+  nav,
+  .button-bar {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .navbar {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-box {
+    width: 100%;
+    max-width: none;
+  }
+  
+  #searchInput {
+    width: 100%;
+  }
+
+  select,
+  #toggleDarkMode,
+  .add-movie-btn {
+    width: 100%;
+  }
+  
+  .button-bar {
+    width: 100%;
+  }
+  
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    padding: 0 1rem;
+    gap: 0.2rem;
+  }
+  
+  .hero-content {
+    left: 1rem;
+    bottom: 20%;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .btn-play, .btn-info {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .contact-section {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding-inline: 0.9rem;
+  }
+
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .modal-content {
+    width: 95%;
+  }
+  
+  #trailerFrame {
+    height: 250px;
+  }
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes upvoteAnimation {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); background-color: #4caf50; }
+  100% { transform: scale(1); }
+}
+
+.upvote-animate {
+  animation: upvoteAnimation 0.3s ease;
+}
+
+@keyframes downvoteAnimation {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}
+
+.downvote-animate {
+  animation: downvoteAnimation 0.3s ease;
+}
+
+/* ============ SCROLLBAR (Netflix Style) ============ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #141414;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #404040;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #808080;
 }
